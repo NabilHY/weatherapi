@@ -23,7 +23,7 @@ const weather = {
     section.innerHTML = '';
     section.innerHTML = `
     <h2>${name}</h2>
-    <h3>${temp}°C</h3>
+    <h3>${Math.floor(temp)}°C</h3>
     <img src = "http://openweathermap.org/img/wn/${icon}@2x.png"></img>
     <p>${desc}</p>
     <p>Humidity: ${humid}%</p>
