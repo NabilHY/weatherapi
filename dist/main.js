@@ -350,7 +350,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "body {\r\n  font-family: 'Libre Baskerville', serif;\r\n  margin: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n  background-image: url(https://source.unsplash.com/1600x900/?nature,water );\r\n  background-repeat: no-repeat;\r\n  background-attachment: fixed;\r\n  background-position: center;\r\n}\r\n\r\nh1 {\r\n  text-align: center;\r\n  padding: 1%;\r\n  color: #fff;\r\n}\r\n\r\nmain {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  height: 86vh;\r\n  color: #fff;\r\n}\r\n\r\n.fullscreen-bg {\r\n  position: fixed;\r\n  top: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  left: 0;\r\n  overflow: hidden;\r\n  z-index: -100;\r\n}\r\n\r\n.fullscreen-bg__video {\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n}\r\n\r\n.forecast > * {\r\n  margin: 10%;\r\n}\r\n\r\n.forecast {\r\n  padding: 1%;\r\n  border-radius: 30px;\r\n  width: 100%;\r\n  max-width: 420px;\r\n  background-color: rgba(80, 80, 80, 0.5);\r\n}\r\n\r\n.search {\r\n  display: flex;\r\n  gap: 25px;\r\n}\r\n\r\n.search input {\r\n  color: #fff;\r\n  font-family: 'Libre Baskerville', serif;\r\n  border-radius: 10px;\r\n  outline: none;\r\n  border: none;\r\n  background-color: rgba(80, 80, 80, 0.5);\r\n  width: 80%;\r\n}\r\n\r\n::-webkit-input-placeholder { /* Chrome/Opera/Safari */\r\n  color: rgb(255, 255, 255);\r\n}\r\n\r\n#search-icon {\r\n  color: #d5d5d5;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "body {\r\n  font-family: 'Libre Baskerville', serif;\r\n  margin: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n  background-image: url(https://source.unsplash.com/1600x900/?nature,water);\r\n  background-repeat: no-repeat;\r\n  background-attachment: fixed;\r\n  background-position: center;\r\n}\r\n\r\nh1 {\r\n  text-align: center;\r\n  padding: 1%;\r\n  color: rgba(255, 255, 255);\r\n}\r\n\r\nmain {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  height: 86vh;\r\n  color: #fff;\r\n}\r\n\r\n.fullscreen-bg {\r\n  position: fixed;\r\n  top: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  left: 0;\r\n  overflow: hidden;\r\n  z-index: -100;\r\n}\r\n\r\n.fullscreen-bg__video {\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n}\r\n\r\n.forecast > * {\r\n  margin: 10%;\r\n}\r\n\r\n.forecast {\r\n  padding: 1%;\r\n  border-radius: 30px;\r\n  width: 100%;\r\n  max-width: 420px;\r\n  background-color: rgba(80, 80, 80, 0.5);\r\n}\r\n\r\n.search {\r\n  display: flex;\r\n  gap: 25px;\r\n}\r\n\r\n.search input {\r\n  color: #fff;\r\n  font-family: 'Libre Baskerville', serif;\r\n  border-radius: 10px;\r\n  outline: none;\r\n  border: none;\r\n  background-color: rgba(80, 80, 80, 0.5);\r\n  width: 80%;\r\n}\r\n\r\n::-webkit-input-placeholder { /* Chrome/Opera/Safari */\r\n  color: rgb(255, 255, 255);\r\n}\r\n\r\n#search-icon {\r\n  color: #d5d5d5;\r\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -548,26 +548,49 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 
 
-const number = 5;
-
-const searchIcon = document.getElementById('search-icon');
+const searchIcon = document.querySelector('.search-icon');
+const searchInput = document.getElementById('city-name');
+const x = document.getElementsByTagName('BODY')[0];
 
 const weather = {
-  key: 'a2636f6f072c72aeb3f7c2b0ce494285',
-  fetchWeather: (city) => {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`;
+  fetchWeather(city) {
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=a2636f6f072c72aeb3f7c2b0ce494285&units=metric`;
     fetch(url)
       .then((resp) => resp.json())
-      .then((data) => undefined.displayWeather(data));
+      .then((data) => this.displayWeather(data));
   },
-  displayWeather: (data) => {
+  displayWeather(data) {
     const { name } = data;
     const { icon, description } = data.weather[0];
     const { temp, humidity } = data.main;
     const { speed } = data.wind;
-    console.log(name, icon, description, temp, humidity, speed);
+    this.renderHTML(name, icon, description, temp, humidity, speed);
+  },
+  renderHTML(name, icon, desc, temp, humid, speed) {
+    const section = document.querySelector('.content');
+    section.innerHTML = '';
+    section.innerHTML = `
+    <h2>${name}</h2>
+    <h3>${Math.floor(temp)}°C</h3>
+    <img src = "http://openweathermap.org/img/wn/${icon}@2x.png"></img>
+    <p>${desc}</p>
+    <p>Humidity: ${humid}%</p>
+    <p>Wind Speed: ${speed}km/h</p>
+    `;
   },
 };
+
+document.addEventListener('DOMContentLoaded', () => {
+  weather.fetchWeather('tetouan');
+  x.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?tetouan')";
+});
+
+searchIcon.addEventListener('click', () => {
+  const city = searchInput.value;
+  weather.fetchWeather(city);
+  x.style.backgroundImage = `url('https://source.unsplash.com/1600x900/?${city}')`;
+  searchInput.value = '';
+});
 
 })();
 
