@@ -1,15 +1,5 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-const productionConfig = merge([
-  {
-    output: {
-      publicPath: '/weatherapi/',
-    },
-  },
-]);
 
 module.exports = {
   entry: './src/index.js',
